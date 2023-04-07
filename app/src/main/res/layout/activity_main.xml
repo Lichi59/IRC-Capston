@@ -19,16 +19,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <EditText
-        android:id="@+id/chat_input_edt"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="메세지를 입력하세요..." />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/chat_btn"
-        android:text="메세지 보내기"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/chat_edt"
+            android:layout_weight="9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="메세지를 입력하세요..." />
+
+        <Button
+            android:id="@+id/chat_btn"
+            android:text="보내기"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </LinearLayout>

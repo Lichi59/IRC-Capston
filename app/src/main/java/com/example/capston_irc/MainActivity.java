@@ -18,7 +18,6 @@ import org.pircbotx.hooks.events.MessageEvent;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-
     public static final String EXTRA_MESSAGE = "com.example.capston_irc.MESSAGE";
     private MyIRCClient client;
     Button chat_btn;
@@ -38,12 +37,11 @@ public class MainActivity extends AppCompatActivity {
 
         // 인텐트로 전달된 닉네임 정보
         Intent intent = getIntent();
-        nickname = intent.getStringExtra(EXTRA_MESSAGE);
+        nickname = intent.getStringExtra("nickname"); //닉네임 정보는 이름으로
 
         // IRC 클라이언트 객체 생성
         Configuration.Builder configuration = new Configuration.Builder()
                 .setName(nickname)
-                .setServerHostname("irc.chat.twitch.tv")
                 .addAutoJoinChannel("#test")
                 .setAutoReconnect(true)
                 .setCapEnabled(true);
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         chat_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage();
+                sendMessage(); //밑에 함수 선언
             }
         });
     }
@@ -86,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         // TextView에 메시지를 보여줌.
         String oldText = chat_tv.getText().toString();
-        String newText = oldText + "\n" + client.getNickname() + ": " + message;
+        String newText = oldText + "\n" + nickname + ": " + message;
         chat_tv.setText(newText);
 
         // IRC 서버로 메시지를 보냄.

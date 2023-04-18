@@ -31,7 +31,7 @@ public class NicknameActivity extends AppCompatActivity {
 
                 // Intent를 통해 닉네임 값을 MainActivity에 전달하고 MainActivity 실행하기
                 Intent intent = new Intent(NicknameActivity.this, MainActivity.class);
-                intent.putExtra("nickname", nickname);
+                intent.putExtra("com.example.capston_irc.nickname", nickname);
                 
                 //MainActivity로 전환
                 startActivity(intent);//아니 왜 안되냐고

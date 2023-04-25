@@ -40,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
         nickname = intent.getStringExtra("com.example.capston_irc.nickname"); //닉네임 정보는 이름으로 => 하니까 오류나서 고침
 
         // IRC 클라이언트 객체 생성
-        if (nickname == null) {
+        if (nickname != null) {
             // 예외 처리 로직 추가
             Configuration.Builder configurationBuilder = new Configuration.Builder()
-                    .setName(nickname) //받아온 이름으로 닉네임 설정했음 => 왜 오류가 나는거야 짜증
+                    .setName(nickname) //받아온 이름으로 닉네임 설정했음 => 왜 오류가 나는거야 짜증 => 얼추 해결
                     .addServer("irc.example.com")
                     .addAutoJoinChannel("#test") //채널 설정
                     .setAutoReconnect(true)
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             // 서버에 연결
             new Thread(() -> { //새로운 스레드 생성
                 try {
-                    client.startBot(); //여기서 봇을 부르는데, client가 null이라 현재 오류 발생 중
+                    client.startBot(); //여기서 봇을 부르는데, client가 null이라 현재 오류 발생 중 => 일단 해결상태
                 } catch (IOException | IrcException e) {
                     e.printStackTrace();
                 }
@@ -69,11 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (client != null) {
-                        try {
-                            client.startBot();
-                        } catch (IOException | IrcException e) {
-                            e.printStackTrace();
-                        }
                         sendMessage(channel);
                     } else {
                         Toast.makeText(MainActivity.this, "서버 연결 중입니다. 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
@@ -86,13 +81,16 @@ public class MainActivity extends AppCompatActivity {
     }
         public void sendMessage(String channel) {//channel을 매개변수로 추가
             // EditText에서 메시지를 가져옴.
-            EditText chat_edt = findViewById(R.id.chat_edt);
             String message = chat_edt.getText().toString();
 
             // TextView에 메시지를 보여줌.
-            String oldText = chat_tv.getText().toString();
-            String newText = oldText + "\n" + nickname + ": " + message;
-            chat_tv.setText(newText);
+            try {
+                String oldText = chat_tv.getText().toString();
+                String newText = oldText + "\n" + nickname + ": " + message;
+                chat_tv.setText(newText);
+            } catch (Exception e) {
+                Toast.makeText(MainActivity.this, "null값이 뜨고 있어서 그런걸까?ㅣㅏ", Toast.LENGTH_SHORT).show();
+            }
 
             // IRC 서버로 메시지를 보냄.
             client.sendMessage(channel, message); // 매개변수로 전달받은 channel을 사용 ===>현재 여기서 오류 발생중. 서버 연결이 안되고 있기 떄문이다.

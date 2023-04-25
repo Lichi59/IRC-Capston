@@ -47,11 +47,6 @@ public class MyIRCClient extends PircBotX {
     public void sendMessage(String channel, String message) {
         // IRC 서버로 채널과 메시지를 전송
         if (!isConnected()) {
-            try {
-                startBot();
-            } catch (IOException | IrcException e) {
-                e.printStackTrace();
-            }
         }
         sendIRC(channel, message);
     }
